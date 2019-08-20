@@ -2172,7 +2172,7 @@ class PicturesControllerTest < ActionController::TestCase
   end
 
   def test_pictures_index_with_filter_documents
-    assert_cacheable_get :index, params: {include: 'imageable', filter: {'imageable#documents.name': 'Management Through the Years'}}
+    assert_cacheable_get :index, params: {include: 'imageable', filter: {'imageable#documents.name' => 'Management Through the Years'}}
     assert_response :success
     assert_equal 3, json_response['data'].try(:size)
     assert_equal 1, json_response['included'].try(:size)

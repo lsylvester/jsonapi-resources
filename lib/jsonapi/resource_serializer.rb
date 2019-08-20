@@ -100,7 +100,7 @@ module JSONAPI
         data = to_many_linkage(resource_ids)
       end
 
-      rel_hash = { 'data': data }
+      rel_hash = { 'data' => data }
 
       links = default_relationship_links(source, requested_relationship)
       rel_hash['links'] = links unless links.blank?

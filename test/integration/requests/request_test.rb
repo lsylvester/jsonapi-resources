@@ -105,7 +105,7 @@ class RequestTest < ActionDispatch::IntegrationTest
   end
 
   def test_nested_filters
-    assert_cacheable_jsonapi_get '/posts?filter[search][title]=New post'
+    assert_cacheable_jsonapi_get '/posts?filter[search][title]=New%20post'
     assert_jsonapi_response 200
     assert_equal 1, json_response['data'].size
   end
@@ -118,7 +118,7 @@ class RequestTest < ActionDispatch::IntegrationTest
 
   # ToDo: change filter to return results
   def test_relationship_filters_nested
-    assert_cacheable_jsonapi_get '/posts?filter[comments.author.name]=Lazy Author&filter[comments.tags.name]=whiny'
+    assert_cacheable_jsonapi_get '/posts?filter[comments.author.name]=Lazy%20Author&filter[comments.tags.name]=whiny'
     assert_jsonapi_response 200
     assert_equal 0, json_response['data'].size
   end
@@ -342,7 +342,7 @@ class RequestTest < ActionDispatch::IntegrationTest
     assert_jsonapi_response 201
 
     body = JSON.parse(response.body)
-    person = Person.find(body.dig("data", "id"))
+    person = Person.find(body["data"]["id"])
 
     assert_equal "Reo", person.name
     assert_equal 4, person.vehicles.count
@@ -643,7 +643,7 @@ class RequestTest < ActionDispatch::IntegrationTest
     assert_jsonapi_response 200
 
     body = JSON.parse(response.body)
-    person = Person.find(body.dig("data", "id"))
+    person = Person.find(body["data"]["id"])
 
     assert_equal "Reo", person.name
     assert_equal 2, person.vehicles.count
@@ -906,7 +906,7 @@ class RequestTest < ActionDispatch::IntegrationTest
   end
 
   def test_polymorphic_relation_filter
-    assert_cacheable_jsonapi_get '/pictures?include=imageable&filter[imageable.name]=Enterprise Gizmo'
+    assert_cacheable_jsonapi_get '/pictures?include=imageable&filter[imageable.name]=Enterprise%20Gizmo'
     assert_equal '1', json_response['data'][0]['id']
     assert_equal '50', json_response['data'][1]['id']
   end
